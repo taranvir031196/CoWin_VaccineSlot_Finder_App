@@ -1,0 +1,108 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="secondary">
+    <ion-title>
+      <b> VaccineSlot Notifier</b>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" color="primary">
+
+  <form #form="ngForm" novalidate>
+    <ion-grid> 
+      <ion-row color="primary" justify-content-center>
+        <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
+          <div text-center>
+            <h3><b><Center>CowinApp VaccineSlot Notifier!!</Center></b></h3>
+          </div>
+          <div padding>
+            <ion-list>
+              <ion-item>
+                <ion-label>Your State:</ion-label>
+                <ionic-selectable
+                [(ngModel)]="state_model"
+                [items]="states"
+                itemValueField="state_id"
+                itemTextField="state_name"
+                [canSearch]="true"
+                (onChange)="portChange($event)" >
+                </ionic-selectable>              
+            </ion-item>
+            <ion-item class="box">
+              <ion-label>Your District:</ion-label>
+              <ionic-selectable
+                [(ngModel)]="district_model"
+                [items]="districts"
+                itemValueField="district_id"
+                itemTextField="district_name"
+                [canSearch]="true"
+                (onChange)="portChange($event)">
+              </ionic-selectable>              
+            </ion-item> 
+            <ion-item >
+              <ion-label>Your Age:</ion-label>
+              <ionic-selectable
+                [(ngModel)]="age_model"
+                [items]="ages"
+                itemValueField="age_id"
+                itemTextField="age"
+                [canSearch]="true"
+                (onChange)="portChange($event)">
+              </ionic-selectable>              
+            </ion-item> 
+          </ion-list>    
+          </div>
+          <div padding>
+            <ion-button  size="large" type="submit" [disabled]="form.invalid" expand="block" color="secondary" >Get Me a Slot!</ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+  <hr>
+  <h3><center><b>OR</b></center></h3>
+  
+  <form #form = "ngForm" >
+    <ion-grid> 
+      <ion-row color="primary" justify-content-center>
+        <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
+          <div padding>
+            <ion-item class="box">
+              <ion-label>Your PinCode:</ion-label>
+          <ion-input type="text" name="title" [(ngModel)]="pincode" placeholder="Enter Pincode of the Area"></ion-input>
+          </ion-item>
+          <ion-item class="box">
+            <ion-label>Date:</ion-label>
+            <ion-input type="date" (input)="date = $event.target.value"></ion-input>
+          </ion-item>          
+          </div>
+          <div padding>
+            <ion-button  size="large" type="submit" expand="block" color="secondary" (click)="getVaccineSlotByPin()">Submit</ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+      <h3><center><b>AND</b></center></h3>
+
+      <ion-row color="primary" justify-content-center>
+        <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
+          <div text-center>
+            <h3><b><Center>Some helpful resources related to COVID-19</Center></b></h3>
+            <div padding>
+              <ion-button  size="medium" type="submit" expand="block" color="secondary" (click)="openPdfDoc()">DO's and DONT's related to COVID-19</ion-button>
+              <ion-button  size="medium" type="submit" expand="block" color="secondary" (click)="openCovidDashboard()" >COVID-19 India data Dashboard</ion-button>
+              <ion-button  size="medium" type="submit" expand="block" color="secondary" (click)="openVaccineInfo()" >India's Vaccine related Info</ion-button>
+          </div>
+          </div>
+          </ion-col>
+          </ion-row>
+          <ion-row color="primary" justify-content-center>
+            <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
+              <div text-center>
+                <h3><Center>Remember:</Center></h3>
+                <h3><b><Center>DO MASK ON BEFORE YOU MOVE ON!!</Center></b></h3>
+                </div>
+                </ion-col>
+                </ion-row>
+      </ion-grid>
+      </form>
+</ion-content>

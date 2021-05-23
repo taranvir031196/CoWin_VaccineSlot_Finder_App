@@ -1,0 +1,7 @@
+{
+  "name": "VaccineSlot",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

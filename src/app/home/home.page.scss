@@ -1,0 +1,24 @@
+
+ion-button{
+  --background: #062f77;
+}
+
+ion-select {
+  /* Applies to the value and placeholder color */
+  color: #545ca7;
+
+  /* Set a different placeholder color */
+  --placeholder-color: white;
+
+  /* Set full opacity on the placeholder */
+  --placeholder-opacity: 1;
+}
+
+.box {
+        border-color: #403E39;
+        border-width: thin;
+        border-style: solid;
+        border-radius: 4px;
+    }
+
+
