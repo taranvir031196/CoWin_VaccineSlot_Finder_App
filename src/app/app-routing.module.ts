@@ -5,11 +5,13 @@ const routes: Routes = [
   
   {path: "", redirectTo: "splash", pathMatch: "full" },
   {path: "home", loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)},
+  {path: "results", loadChildren: () => import('./results/results.module').then( m => m.ResultsPageModule)},
 
   {
     path: 'splash',
     loadChildren: () => import('./splash/splash.module').then( m => m.SplashPageModule)
   }
+ 
 
 ];
 

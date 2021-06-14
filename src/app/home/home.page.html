@@ -17,7 +17,7 @@
           </div>
           <div padding>
             <ion-list>
-              <ion-item>
+              <ion-item class = "box">
                 <ion-label>Your State:</ion-label>
                 <ionic-selectable
                 [(ngModel)]="state_model"
@@ -39,21 +39,14 @@
                 (onChange)="portChange($event)">
               </ionic-selectable>              
             </ion-item> 
-            <ion-item >
-              <ion-label>Your Age:</ion-label>
-              <ionic-selectable
-                [(ngModel)]="age_model"
-                [items]="ages"
-                itemValueField="age_id"
-                itemTextField="age"
-                [canSearch]="true"
-                (onChange)="portChange($event)">
-              </ionic-selectable>              
+            <ion-item class="box">
+              <ion-label>Date:</ion-label>
+              <ion-datetime placeholder="Choose Date" name="date" [(ngModel)]="date" min="2021" max="2023" displayFormat="DD-MM-YYYY" (ionChange)="changeFormat(date)"></ion-datetime>    
             </ion-item> 
           </ion-list>    
           </div>
           <div padding>
-            <ion-button  size="large" type="submit" [disabled]="form.invalid" expand="block" color="secondary" >Get Me a Slot!</ion-button>
+            <ion-button  size="large" type="submit" [disabled]="form.invalid" expand="block" color="secondary" (click)="getvaccineSlotBydistrict()">Get Me a Slot!</ion-button>
           </div>
         </ion-col>
       </ion-row>
@@ -69,11 +62,11 @@
           <div padding>
             <ion-item class="box">
               <ion-label>Your PinCode:</ion-label>
-          <ion-input type="text" name="title" [(ngModel)]="pincode" placeholder="Enter Pincode of the Area"></ion-input>
+          <ion-input type="text" name="title" [(ngModel)]="pincode"></ion-input>
           </ion-item>
           <ion-item class="box">
             <ion-label>Date:</ion-label>
-            <ion-input type="date" (input)="date = $event.target.value"></ion-input>
+            <ion-datetime placeholder="Choose Date" name="date" [(ngModel)]="date" min="2021" max="2023" displayFormat="DD-MM-YYYY" (ionChange)="changeFormat(date)"></ion-datetime>
           </ion-item>          
           </div>
           <div padding>

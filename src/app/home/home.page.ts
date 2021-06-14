@@ -9,6 +9,10 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { AlertController, NavController } from '@ionic/angular';
 import { DatePicker } from '@ionic-native/date-picker/ngx';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { DatePipe } from '@angular/common';
+import * as moment from 'moment';
+import { ResultsPage } from '../results/results.page';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -17,14 +21,47 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['home.page.scss'],
 })
 
-export class HomePage {
+export class HomePage implements ngOnInit {
   form: FormGroup;
+  public pincode: any;
+  public date: any;
+  public district_id:any
+  selectedDate: Date;
+  newdate: string;
+  district_value = []
 
-  constructor(private fb: FormBuilder,private vaccineservice: VaccineService, private document: DocumentViewer, private iab: InAppBrowser, private alertCtrl: AlertController, private navCtrl: NavController, private datePicker: DatePicker) {
+
+  constructor(private fb: FormBuilder,private vaccineservice: VaccineService, private document: DocumentViewer, private iab: InAppBrowser, private alertCtrl: AlertController, private navCtrl: NavController, private datePicker: DatePicker, private results: ResultsPage, private router: Router) {
         // this.form=fb.group({
         //   pincode: [''],
         //   date: ['']          
         // })
+}
+
+ngOnInit(){
+      const alert = await this.alertCtrl.create({
+        header: 'Important!!',
+        cssClass: 'my-custom-alert',
+        message: "Please try not to spam the CoWin servers and try to keep a timeout between subsequent requests if you are polling at a fixed interval. Also this a custom built solution trying to fetch results from Cowin Servers",
+        buttons: [
+        {
+          text: 'Got It'
+        }
+      ]
+});
+  console.log(data);
+  await alert.present()    
+},async err=>{
+      await loading.dismiss();
+      const alert = await this.alertCtrl.create({
+          header: 'Error',
+          message: "Sorry Cannot Fetch any results at this moment. Please try again later!",
+          buttons: ['OK']
+      });
+      console.log(err);
+      await alert.present()
+  });
+}
 }
 
 openPdfDoc(){
@@ -66,26 +103,28 @@ public getVaccineSlotPincodeAlert(){
   })
 }
 
+getvaccineSlotBydistrict(): void{
+  let dist_id = this.district_value.pop();
+  console.log(dist_id);
+  let date_value =  this.changeFormat(this.date);
+  console.log(date_value);
+  this.vaccineservice.getVaccineSlotsByDistrict(dist_id, date_value);
+}
+
+
 getVaccineSlotByPin(): void{
 
-  let pincode_value = this.form.get('pincode').value;
+  let pincode_value = this.pincode;
   console.log(pincode_value);
-  let date_value = this.form.get('date').value;
+  let date_value =  this.changeFormat(this.date);
   console.log(date_value);
   this.vaccineservice.getVaccineSlotsByPincode(pincode_value, date_value);
 
 }
 
-showcalendar(){
-  this.datePicker.show({
-    date: new Date(),
-    mode: 'date',
-    titleText: 'set Date',
-    androidTheme: this.datePicker.ANDROID_THEMES.THEME_DEVICE_DEFAULT_LIGHT
-  }).then(
-    date => console.log('Got date: ', date),
-    err => console.log('Error occurred while getting date: ', err)
-  );
+
+changeFormat(date){
+  return moment(date).format('DD-MM-YYYY');
 }
 
 portChange(event: {
@@ -93,6 +132,7 @@ portChange(event: {
   value: any
 }) {
   console.log('port:', event.value);
+  this.district_value.push(event.value.district_id);
 }
 
 
