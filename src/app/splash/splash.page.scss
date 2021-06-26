@@ -1,26 +1,60 @@
-img{
-    align-items: center;
-    padding-top: 30%;
-    padding-left: 30%;
-    padding-right: 30%;
-    padding-bottom: 20%;
-    height: 50ex;
-    width: 80ex;
-  
+
+ion-slide{
+    padding: 30px 30px;
+    display: block;
+    background-color: white;
+    block-size: 100ex;
+    h2{
+    font-size: 36px;
+    font-weight: bold;
+    }
+    img{
+        width: 500px;
+    }
+
+    .Vaccine{
+        height: 400px;
+    }
+
+    .prevent{
+        box-sizing: 150ex;
+    }
+
+    h3{
+        color: blue;
+    }
+
+    h2{
+        color: blue;
+    }
+
+    #description{
+        font-style: italic;
+    }
 }
+
+// div{
+//     padding-top: 40px;
+// }
 
 ion-button{
-    --padding: 40px;
+    --padding: 30px;
     position: bottom;
+}
+
+// ion-content{
+//     --background:#545ca7;
+//     block-size: 70ex;
+
+// }
+
+ion-content.background{
+    --background: url(../../assets/images/coronavirus-vaccine.jpg) 0 0/100% 80% no-repeat;
+   background-color: blue;
+  //--background:#545ca7;
+  block-size: 70ex;
 
 }
 
-ion-content{
-    --background:white;
-}
 
-p{
-    padding-block: 40px;
-    font-size: 30px;
-}
 

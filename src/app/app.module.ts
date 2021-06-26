@@ -6,7 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { IonicModule, IonicRouteStrategy, IonRouterOutlet } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -15,7 +15,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
 import { DatePicker } from '@ionic-native/date-picker/ngx';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import {HTTP} from '@ionic-native/Http/ngx';
+import { HTTP } from '@ionic-native/http/ngx';
 import { ResultsPage } from './results/results.page';
 
 
@@ -29,10 +29,10 @@ import { ResultsPage } from './results/results.page';
     HttpClientModule,
     IonicSelectableModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
     
   ],
-  providers: [InAppBrowser,DatePicker,FormBuilder,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy}, DocumentViewer, ResultsPage],
+  providers: [InAppBrowser,DatePicker,FormBuilder,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy}, DocumentViewer, ResultsPage, HTTP],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

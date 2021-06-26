@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, JsonpClientBackend } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { from, Observable } from 'rxjs';
 import { Districts } from '../interfaces/districts';
@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { ResultsPage } from '../results/results.page';
 //import {HTTP} from '@ionic-native/http/ngx';
+import { HTTP } from '@ionic-native/http/ngx';
+
 
 @Injectable({
   providedIn: 'root'
@@ -22,11 +24,11 @@ export class VaccineService implements OnInit {
   private CALENDAR_BY_DISTRICT: string= "/calendarByDistrict";
   private CALENDAR_BY_PINCODE: string= "/calendarByPin";
   data: Object;
-  public result: any = [];
+  public result = [];
   mylist:string;
 
   
-  constructor(private http: HttpClient, private loadingCtrl: LoadingController, private alertCtrl: AlertController, private plt: Platform, private router: Router, private iab: InAppBrowser, private res : ResultsPage ) {
+  constructor(private http: HTTP, private loadingCtrl: LoadingController, private alertCtrl: AlertController, private plt: Platform, private router: Router, private iab: InAppBrowser, private res : ResultsPage ) {
 
   }
   
@@ -40,18 +42,16 @@ export class VaccineService implements OnInit {
     });
     await loading.present();
 
-    let headers = new HttpHeaders({
-      'Access-Control-Allow-Origin': '*'
-    });
-    
-    this.http.get(this.url+this.CALENDAR_BY_DISTRICT+ '?'+ 'district_id=' + district_id +'&'+ 'date=' + date, {"headers": headers}).subscribe(async data=>{
+    if(district_id != null || district_id !=undefined){  
+    this.http.get(this.url+this.CALENDAR_BY_DISTRICT+ '?'+ 'district_id=' + district_id +'&'+ 'date=' + date, {}, {}).then(async data=>{
       await loading.dismiss();
-      this.result = data;
+    //  this.result = JSON.stringify(data);
+
       const alert = await this.alertCtrl.create({
         header: 'Results',
         cssClass: 'my-custom-alert',
         subHeader: 'Hooray! Results fetched as per your requirement',  
-        message: this.result,
+        message: JSON.stringify(data.data),
         buttons: [
         {
           text: "BOOK NOW",
@@ -75,7 +75,22 @@ export class VaccineService implements OnInit {
       });
       console.log(err);
       await alert.present()
-  });
+    });
+  }else{
+    await loading.dismiss();
+    const alert = this.alertCtrl.create({
+      header: 'Need Your Attention!!',
+      cssClass: 'my-important-alert',
+      message: "Please Select State and district as per your requirememt first!",
+      buttons: [
+      {
+        text: 'LetMeCorrect'
+      }
+    ]
+  }).then(alert=>{
+    alert.present();
+      });
+    }
 }
 
   async getVaccineSlotsByPincode(pincode, date){
@@ -84,20 +99,15 @@ export class VaccineService implements OnInit {
     });
     await loading.present();
 
-    let headers = new HttpHeaders({
-      'Access-Control-Allow-Origin': '*'
-    });
+    if(pincode!=null || pincode!=undefined){
 
-    this.http.get(this.url+this.CALENDAR_BY_PINCODE+ '?'+ 'pincode=' + pincode +'&'+ 'date=' + date, {"headers": headers}).subscribe(async data=>{
+    this.http.get(this.url+this.CALENDAR_BY_PINCODE+ '?'+ 'pincode=' + pincode +'&'+ 'date=' + date, {}, {}).then(async data=>{
       await loading.dismiss();
-
-      this.result = JSON.stringify(data);
-   
       const alert = await this.alertCtrl.create({
         header: 'Results',
         cssClass: 'my-custom-alert',
         subHeader:"Hooray! Results fetched as per your requirement",
-        message:  JSON.stringify(data),
+        message:  JSON.stringify(data.data),
         buttons: [
         {
           text: "Book Now",
@@ -123,5 +133,19 @@ export class VaccineService implements OnInit {
       console.log(err);
       await alert.present()
     });
-  }
+  }else{
+    await loading.dismiss();
+    const alert = this.alertCtrl.create({
+      header: 'Need Your Attention!!',
+      message: "Please Enter the Pincode first!",
+      buttons: [
+      {
+        text: 'LetMeCorrect'
+      }
+    ]
+  }).then(alert=>{
+    alert.present();
+        });
+      }
+    }
 }

@@ -1,7 +1,41 @@
-<ion-content>
-  <img src="assets/images/covid19logo.jpg" alt="Covid19 logo" />
-  <img src="assets/icon/images.png" alt="Vaccine Icon" />
-  <p><b><center> Welcome to VaccineSlot Notifier App </center></b></p>
-  <ion-button expand="block" shape="round" color="primary" (click)="navigateToVaccineSlotPage()">START</ion-button>
-  <ion-button  expand="block" shape="round" color="primary" (click)="openCowinPortal()">Want to Register for Vaccine?</ion-button> 
+<!-- <div class = "splash-animation">
+  <div class = "splash-img">
+    <img src="assets/icon/images.png" alt="Vaccine Icon" />
+    <p><b><center> Welcome to VaccineSlot Notifier App </center></b></p>
+  </div>
+</div> -->
+
+<ion-content class="background">
+<ion-slides pager="true" [options]="slideOpts">
+  <ion-slide>
+    <img src="assets/images/covid19logo.jpg" alt="Covid19 logo" />
+    <img class ="Vaccine" src="assets/icon/Flu-Vaccine-Icon.png" alt="Vaccine Icon" />
+    <div>
+    <h3>#LetsVaccinateIndia</h3>
+    <h3>#IndiaFightsCorona</h3>
+    <h3><b>Welcome to Cowin VaccineSlot Finder App</b></h3>
+    <p id="description"> This is your own own app where you can get the real time updates on the vaccine slots available on Cowin Application.</p>
+  </div>
+  </ion-slide>
+  <ion-slide>
+    <h2><b>Coronavirus</b></h2>
+    <img src="assets/images/virus_image.png" alt="Covid19 logo"/>
+    <p id="description">The COVID-19 pandemic, also known as the coronavirus pandemic, is an ongoing global pandemic of coronavirus disease 2019 (COVID-19), which is caused by severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2). The virus was first identified in December 2019 in Wuhan, China.</p>    
+  </ion-slide>
+  <ion-slide>
+  <h2>Situation in India</h2>
+  <img class="graph" src="assets/images/graph_corona.webp" alt="graph image"/>
+  <p id="description"> With a massive second wave of Covid-19 sweeping through India, one in five infections in the world is currently being reported from the country.Many experts believe the surge is partly fuelled by new strains of the coronavirus, including a more infectious homegrown variant found in 61% of samples genome sequenced in Maharashtra, the worst hit state. The laxity in preventive measures, coupled with the presence of new variants, has resulted in a nationwide crisis.</p>
+</ion-slide>
+<ion-slide class="prevent">
+  <h2>Symptoms and Prevention</h2>
+  <img class="prevent" src="assets/images/Document.jpg" alt="prevention"/>
+  <p id="description">COVID-19 causes respiratory illness (like the flu) with symptoms such as a cough, fever, and in more severe cases, difficulty breathing.</p>
+  <p id="description">There are some preventive actions you can take and follow regularly to keep yourself safe from coronavirus: Wash your hand often, Avoid touching your face and eyes , nose and mouth, Get Vaccinated As Soon as Possible</p>
+</ion-slide>
+</ion-slides>
+
+
+<ion-button expand="block" shape="round" color="primary" (click)="navigateToVaccineSlotPage()">START</ion-button>
+<ion-button  expand="block" shape="round" color="primary" (click)="openCowinPortal()">Want to Register for Vaccine?</ion-button> 
 </ion-content>

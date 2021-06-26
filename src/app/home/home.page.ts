@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { IonicSelectableComponent } from 'ionic-selectable';
 import { Age } from '../interfaces/age';
 import { Districts } from '../interfaces/districts';
@@ -6,9 +6,9 @@ import { State } from '../interfaces/state';
 import { VaccineService } from '../services/vaccine.service';
 import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-import { AlertController, NavController } from '@ionic/angular';
+import { AlertController, NavController, Platform } from '@ionic/angular';
 import { DatePicker } from '@ionic-native/date-picker/ngx';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import * as moment from 'moment';
 import { ResultsPage } from '../results/results.page';
@@ -21,8 +21,8 @@ import { Router } from '@angular/router';
   styleUrls: ['home.page.scss'],
 })
 
-export class HomePage implements ngOnInit {
-  form: FormGroup;
+export class HomePage implements OnInit {
+//  public form: FormGroup;
   public pincode: any;
   public date: any;
   public district_id:any
@@ -31,45 +31,42 @@ export class HomePage implements ngOnInit {
   district_value = []
 
 
-  constructor(private fb: FormBuilder,private vaccineservice: VaccineService, private document: DocumentViewer, private iab: InAppBrowser, private alertCtrl: AlertController, private navCtrl: NavController, private datePicker: DatePicker, private results: ResultsPage, private router: Router) {
-        // this.form=fb.group({
-        //   pincode: [''],
-        //   date: ['']          
-        // })
+  constructor(private fb: FormBuilder,private vaccineservice: VaccineService, private document: DocumentViewer, private iab: InAppBrowser, private alertCtrl: AlertController, private navCtrl: NavController, private datePicker: DatePicker, private results: ResultsPage, private router: Router, private platform:Platform, private formBuilder: FormBuilder) {
+   
+    this.platform = platform;
+
+    // this.form = this.formBuilder.group({
+    //   "pin": ["", Validators.required]
+    // });
 }
 
 ngOnInit(){
-      const alert = await this.alertCtrl.create({
-        header: 'Important!!',
-        cssClass: 'my-custom-alert',
-        message: "Please try not to spam the CoWin servers and try to keep a timeout between subsequent requests if you are polling at a fixed interval. Also this a custom built solution trying to fetch results from Cowin Servers",
-        buttons: [
-        {
-          text: 'Got It'
-        }
-      ]
-});
-  console.log(data);
-  await alert.present()    
-},async err=>{
-      await loading.dismiss();
-      const alert = await this.alertCtrl.create({
-          header: 'Error',
-          message: "Sorry Cannot Fetch any results at this moment. Please try again later!",
-          buttons: ['OK']
-      });
-      console.log(err);
-      await alert.present()
-  });
-}
+      this.createAlert();
 }
 
+createAlert(){
+  const alert = this.alertCtrl.create({
+    header: 'Important!!',
+    cssClass: 'my-important-alert',
+    message: "Please try not to spam the CoWin servers and try to keep a timeout between subsequent requests if you are polling at a fixed interval. Also this a custom built solution trying to fetch results from Cowin Servers",
+    buttons: [
+    {
+      text: 'Got It'
+    }
+  ]
+}).then(alert=>{
+  alert.present();
+  });
+}
+
+
 openPdfDoc(){
-  const options: DocumentViewerOptions = {
-    title: 'Dos_and_Donts_on_Covid19'
-  }
-  this.document.viewDocument("assets/docs/Dos_and_Donts_on_Covid19.pdf", "application/pdf", options);
-  console.log("Pdf opened after the click");
+  // const options: DocumentViewerOptions = {
+  //   title: 'Dos_and_Donts_and_FAQs_on_Covid19.pdf'
+  // }
+  // this.document.viewDocument("http://www.nia.nic.in/pdf/Dos_and_Donts_and_FAQs_on_Covid19.pdf", "application/pdf", options);
+  // console.log("Pdf opened after the click");
+  this.iab.create(`http://www.nia.nic.in/pdf/Dos_and_Donts_and_FAQs_on_Covid19.pdf`, `_blank`);
 }
 
 openCovidDashboard(){
@@ -78,8 +75,14 @@ openCovidDashboard(){
 }
 
 openVaccineInfo(){
-  this.iab.create(`https://www.mohfw.gov.in/covid_vaccination/vaccination/index.html/`, `_blank`);
+  this.iab.create(`https://vaccine.icmr.org.in/covid-19-vaccine/`, `_blank`);
 }
+
+faqRelatedToVaccine(){
+  this.iab.create(`https://www.mygov.in/covid-19/`, `_blank`);
+
+}
+
 
 public getVaccineSlotPincodeAlert(){
 
@@ -109,6 +112,7 @@ getvaccineSlotBydistrict(): void{
   let date_value =  this.changeFormat(this.date);
   console.log(date_value);
   this.vaccineservice.getVaccineSlotsByDistrict(dist_id, date_value);
+
 }
 
 
@@ -119,7 +123,7 @@ getVaccineSlotByPin(): void{
   let date_value =  this.changeFormat(this.date);
   console.log(date_value);
   this.vaccineservice.getVaccineSlotsByPincode(pincode_value, date_value);
-
+  
 }
 
 
@@ -134,6 +138,18 @@ portChange(event: {
   console.log('port:', event.value);
   this.district_value.push(event.value.district_id);
 }
+
+openMyTwitter(){
+  this.iab.create(`https://www.twitter.com/`, `_blank`);    
+} 
+
+openMyLinkedIn(){
+  this.iab.create(`https://www.linkedin.com/in/taranvir-singh-saini-762601b0/`, `_blank`);    
+} 
+
+openMyGithub(){
+  this.iab.create(`https://github.com/taranvir031196`, `_blank`);    
+} 
 
 
 stringify(state){
