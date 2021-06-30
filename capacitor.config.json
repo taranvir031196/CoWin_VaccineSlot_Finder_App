@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "VaccineSlot",
+  "appId": "io.cowin.bundle",
+  "appName": "Cowin VaccineSlot Finder",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",

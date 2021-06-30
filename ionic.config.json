@@ -1,7 +1,17 @@
 {
-  "name": "VaccineSlot",
-  "integrations": {
+  "name": "Cowin VaccineSlot Finder",
+  "typescript": true,
+  "v2": true,
+
+  "proxies": [
+    {
+      "path": "/api",
+      "proxyUrl": "https://cdn-api.co-vin.in/api"
+    }
+  ],
+"integrations": {
     "capacitor": {}
   },
+ 
   "type": "angular"
 }
